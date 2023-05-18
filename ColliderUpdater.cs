@@ -9,7 +9,7 @@ public class ColliderUpdater : MonoBehaviour
 
     void Start()
     {
-        capsuleCollider = this.gameObject.AddComponent<CapsuleCollider>(); // Add a CapsuleCollider to this gameObject
+        capsuleCollider = this.gameObject.AddComponent<CapsuleCollider>(); 
         capsuleCollider.radius = 0.3f; // Set a suitable radius for your needs
     }
 
