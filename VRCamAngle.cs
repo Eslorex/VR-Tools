@@ -7,11 +7,6 @@ public class VRCamAngle : MonoBehaviour
 {
     public Camera VRCam;
     public GameObject Target;
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
