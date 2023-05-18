@@ -33,7 +33,6 @@ public class ColliderUpdater : MonoBehaviour
             Vector3 colliderCenter = VRCamera.transform.position - (Vector3.up * colliderHeight * 0.5f);
             capsuleCollider.center = this.transform.InverseTransformPoint(colliderCenter);
 
-            // Set the height of the collider
             capsuleCollider.height = colliderHeight;
         }
         else
