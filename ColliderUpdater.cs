@@ -38,7 +38,8 @@ public class ColliderUpdater : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red); // Draw the ray in red
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red); 
+            capsuleCollider.height = maxColliderHeight;
             Debug.Log("No ground detected beneath the camera");
         }
     }
