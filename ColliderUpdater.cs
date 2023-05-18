@@ -3,8 +3,8 @@ using UnityEngine;
 public class ColliderUpdater : MonoBehaviour
 {
     public Camera VRCamera;
-    public LayerMask groundLayer; // Assign the ground layer here in the Inspector
-    public float maxColliderHeight = 2f; // Max height of the collider
+    public LayerMask groundLayer; 
+    public float maxColliderHeight = 2f; 
     private CapsuleCollider capsuleCollider;
 
     void Start()
@@ -22,8 +22,7 @@ public class ColliderUpdater : MonoBehaviour
     {
         Ray ray = new Ray(VRCamera.transform.position, Vector3.down);
         RaycastHit hit;
-
-        // Casting a ray from the camera to the ground
+        
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green); // Draw the ray in green
