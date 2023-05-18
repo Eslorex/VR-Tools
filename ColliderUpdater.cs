@@ -29,11 +29,7 @@ public class ColliderUpdater : MonoBehaviour
             Debug.Log("Raycast hit point: " + hit.point);
 
             float cameraToGroundDistance = Vector3.Distance(VRCamera.transform.position, hit.point);
-
-            // If the distance to the ground is greater than the max allowed height, limit the height
             float colliderHeight = Mathf.Min(cameraToGroundDistance, maxColliderHeight);
-
-            // Calculate the position for the center of the collider
             Vector3 colliderCenter = VRCamera.transform.position - (Vector3.up * colliderHeight * 0.5f);
             capsuleCollider.center = this.transform.InverseTransformPoint(colliderCenter);
 
