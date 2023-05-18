@@ -25,7 +25,7 @@ public class ColliderUpdater : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
-            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green); // Draw the ray in green
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green); 
             Debug.Log("Raycast hit point: " + hit.point);
 
             float cameraToGroundDistance = Vector3.Distance(VRCamera.transform.position, hit.point);
