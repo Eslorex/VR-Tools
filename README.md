@@ -4,4 +4,6 @@
 I will add more tools i've made and their visual representation soon.
 
 # ColliderUpdater
-Modifies the height and position of the player's Capsule Collider based on the height and position of the VR Camera. This adjustment is implemented as a useful precautionary measure, aiming to prevent the player from trying to peer through walls or maneuver through narrow tunnels.
+ColliderUpdater adjusts the height and position of the player's Capsule Collider according to the height and position of the VR Camera. If no ground is detected (e.g., during flight), the height is set to the maximum collider height defined. This maximum height can be determined by the player's real-life height, which can be derived from the VR Device.
+
+In various scenarios, this functionality proves beneficial for ensuring accurate physics and avoiding potential errors, particularly when navigating through tunnels.
