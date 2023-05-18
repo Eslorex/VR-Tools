@@ -13,3 +13,6 @@ In various scenarios, this functionality proves beneficial for ensuring accurate
 
 # VRCamAngle
 Calculates the angle between the VR camera's forward direction and the position of an target in the game. Gives you a value that explains how directly you're looking at the target. Which enables a lot of potential for VR gameplay.
+
+# ContinuousMovement
+Allows continuous movement for a character controller in a VR environment based on the input from the left hand controller's primary 2D axis. The movement direction is determined by the orientation of the player's head.
