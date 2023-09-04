@@ -17,3 +17,20 @@ Calculates the angle between the VR camera's forward direction and the position 
 
 # ContinuousMovement
 Allows continuous movement for a character controller in a VR environment based on the input from the left hand controller's primary 2D axis. The movement direction is determined by the orientation of the player's head. You can also consider using XR System provided by Unity. This one offers a simpler approach in case you want to make specific modifications.
+
+# Illusa_PlayerInput
+Small input framework to make everything "tidier". 
+Instead of using rightHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue2)
+just use float triggerValue = playerInput.GetTriggerValue(handNode);
+
+# Illusa_InteractionHandler
+Small uncompleted but operating interaction framework which includes necessary function to move an object along the Bezier Curve to target position. BezierCurve class can be found in my repositories. 
+
+# CameraRaycastGrab
+Testing script for Illusa_InteractionHandler using Camera's position.
+
+# HandAnimator
+Uses Illusa_PlayerInput framework to animate given hands. Kinda dumb approach for dumb initialization way of XR Origin, but most propably the easiest way.
+
+# CoroutineRunner
+Runs Coroutines defined in classes that doesn't inheriting from MonoBehaviour. Acts like a Manager script and always should exist in scene to "represent" Coroutines. Since Coroutines cannot exist without MonoBehaviour, this does for them. Mostly used for making frameworks operatable.
