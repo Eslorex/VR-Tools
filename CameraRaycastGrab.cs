@@ -1,72 +1,74 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static System.TimeZoneInfo;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class CameraRaycastGrab : MonoBehaviour
 {
-    public bool isMoving;
-    public bool isCompleted;
-    public float curveFactor;
-    public float transitionTime;
-    public Illusa_InteractionHandler handler = new Illusa_InteractionHandler();
-    // Start is called before the first frame update
-    public Camera camera;
+    public bool IsMoving => handler.isMoving();
+    public bool IsCompleted => handler.isCompleted();
+    public float CurveFactor;
+    public float TransitionTime;
+    public Camera Camera;
+    
+    private Illusa_InteractionHandler handler = new Illusa_InteractionHandler();
 
-    void Start()
+    void Update()
     {
+        UpdateHandler();
         
-    }
-    public void MoveInteractableFromActiveCameraToRaycastHit()
-    {
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100f))
+        if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(ShowRay(ray, 5f, hit.point)); // Start the ShowRay coroutine with the hit position
-            XRBaseInteractable hitInteractable = hit.transform.GetComponent<XRBaseInteractable>(); // Get the XRBaseInteractable of the hit object
-            
-            if (hitInteractable && !isMoving) // If we hit an interactable (object that has XRBaseInteractable) and if it's not moving
-            {
-                Debug.Log("Interactor name : " + gameObject.name);
-                Debug.Log("Interactable name: " + hitInteractable);
-                DistanceInfo distanceInfo = hitInteractable.GetDistance(camera.transform.position); // myInteractable is your instance of the Interactable class
-                float distance = Mathf.Sqrt(distanceInfo.distanceSqr);
-                Debug.Log("Distance: " + distance);
-                Debug.Log("Interactable distance to Interactor: " + distance);
-                handler.SetTargetPosition(camera.transform.position); // Set the target position
-                handler.SetTargetRotation(camera.transform.rotation); // Set the target rotation
+            ProcessMouseInput();
+        }
+    }
 
-                handler.MoveAndRotate(hitInteractable.gameObject, curveFactor, transitionTime);
+    private void UpdateHandler()
+    {
+        handler.SetTargetPosition(Camera.transform.position);
+        handler.SetTargetRotation(Camera.transform.rotation);
+    }
+
+    private void ProcessMouseInput()
+    {
+        Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        {
+            StartCoroutine(ShowRay(ray, 5f, hit.point));
+            XRBaseInteractable hitInteractable = hit.transform.GetComponent<XRBaseInteractable>();
+
+            if (hitInteractable && !IsMoving)
+            {
+                MoveAndRotateInteractable(hitInteractable);
             }
         }
     }
 
+    private void MoveAndRotateInteractable(XRBaseInteractable interactable)
+    {
+        DebugInfo(interactable);
+        DistanceInfo distanceInfo = interactable.GetDistance(Camera.transform.position);
+        float distance = Mathf.Sqrt(distanceInfo.distanceSqr);
+        handler.MoveAndRotate(interactable.gameObject, CurveFactor, TransitionTime);
+    }
 
-    IEnumerator ShowRay(Ray ray, float duration, Vector3 hitPosition)
+    private void DebugInfo(XRBaseInteractable interactable)
+    {
+        Debug.Log($"Interactor name: {gameObject.name}");
+        Debug.Log($"Interactable name: {interactable}");
+        DistanceInfo distanceInfo = interactable.GetDistance(Camera.transform.position);
+        float distance = Mathf.Sqrt(distanceInfo.distanceSqr);
+        Debug.Log($"Distance: {distance}");
+    }
+
+    private IEnumerator ShowRay(Ray ray, float duration, Vector3 hitPosition)
     {
         float endTime = Time.time + duration;
-
         while (Time.time <= endTime)
         {
             float distance = Vector3.Distance(ray.origin, hitPosition);
             Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);
-            yield return null;  // Wait for next frame
+            yield return null;
         }
-
         Debug.DrawRay(ray.origin, ray.direction * 0f, Color.clear);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        isMoving = handler.isMoving();
-        isCompleted = handler.isCompleted();
-        handler.SetTargetPosition(camera.transform.position); // Set the target position
-        handler.SetTargetRotation(camera.transform.rotation);
-        if (Input.GetMouseButtonDown(0))
-        {
-            MoveInteractableFromActiveCameraToRaycastHit();
-        }
     }
 }
